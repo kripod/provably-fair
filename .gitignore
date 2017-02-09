@@ -1,0 +1,13 @@
+# Project-specific
+build
+dist
+
+# Logs
+*.log*
+
+# Code coverage output
+coverage
+.nyc_output
+
+# Dependencies
+node_modules

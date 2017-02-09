@@ -1,0 +1,25 @@
+{
+  "name": "@provably-fair/core",
+  "version": "0.0.0",
+  "description": "Generic purpose tools for creating and verifying provably fair games",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kripod/provably-fair/tree/master/packages/core",
+  "author": "Kristóf Poduszló <kripod@protonmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "dist",
+    "../LICENSE"
+  ],
+  "scripts": {
+    "build": "babel src -d dist -s",
+    "doc": "documentation readme \"src/**\" --section=\"API Reference\""
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "documentation": "^4.0.0-beta.18"
+  }
+}

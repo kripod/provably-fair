@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "extends": "airbnb-base",
+  "rules": {
+    "import/no-extraneous-dependencies": ["off", {
+      "devDependencies": [
+        "**/*.test.js"
+      ]
+    }],
+    "require-jsdoc": ["error"],
+    "valid-jsdoc": ["error", {
+      "prefer": {
+        "arg": "param",
+        "argument": "param",
+        "return": "returns"
+      }
+    }]
+  }
+}

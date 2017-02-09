@@ -1,0 +1,28 @@
+{
+  "name": "@provably-fair/primedice",
+  "version": "0.0.0",
+  "description": "Primedice bet simulation and verification tools",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kripod/provably-fair/tree/master/packages/primedice",
+  "author": "Kristóf Poduszló <kripod@protonmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "dist",
+    "../LICENSE"
+  ],
+  "scripts": {
+    "build": "babel src -d dist -s",
+    "doc": "documentation readme \"src/**\" --section=\"API Reference\""
+  },
+  "dependencies": {
+    "@provably-fair/core": "^0.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "documentation": "^4.0.0-beta.18"
+  }
+}
