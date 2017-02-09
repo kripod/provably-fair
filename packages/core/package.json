@@ -1,6 +1,6 @@
 {
   "name": "@provably-fair/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Generic purpose tools for creating and verifying provably fair games",
   "main": "dist/index.js",
   "repository": "https://github.com/kripod/provably-fair/tree/master/packages/core",
