@@ -9,13 +9,13 @@ import { createHmac } from 'crypto';
  * @returns {number} An unsigned integer parsed from the given buffer. If no appropriate number can
  * be parsed, `NaN` is returned.
  */
-export function parseRandomUInt(buf, max, size, startOffset = 0) {
+export function parseUIntFromBuffer(buf, max, size, startOffset = 0) {
   // No appropriate number can be parsed
   if (startOffset > buf.length - size) return NaN;
 
   // Parse next number of the buffer and check whether it fits the given range
-  const r = buf.readUIntBE(startOffset, size, true);
-  return r < max ? r : parseRandomUInt(buf, max, size, startOffset + 1);
+  const randomValue = buf.readUIntBE(startOffset, size, true);
+  return randomValue < max ? randomValue : parseUIntFromBuffer(buf, max, size, startOffset + 1);
 }
 
 /**
@@ -27,7 +27,7 @@ export function parseRandomUInt(buf, max, size, startOffset = 0) {
  * outputs, the hash of `secretSeed` shall be known before revealing `publicSeed`.
  * @param {number} [min=0] Minimum value of output (included).
  * @param {number} [max=256 ** size] Maximum value of output (excluded).
- * @param {function} [randomUIntParser=parseRandomUInt] Function to be used for parsing a random
+ * @param {function} [hmacBufferUIntParser=parseUIntFromBuffer] Function to be used for parsing a
  * UInt from the generated HMAC buffer.
  * @param {function} [fallbackProvider=range => Math.floor(range / 2)] Function to provide a
  * fallback value in the given range whether no appropriate number can be parsed.
@@ -40,11 +40,11 @@ export function randomInt(
   publicSeed = '',
   min = 0,
   max = 256 ** size,
-  randomUIntParser = parseRandomUInt,
+  hmacBufferUIntParser = parseUIntFromBuffer,
   fallbackProvider = range => Math.floor(range / 2),
 ) {
-  const range = max - min;
   const maxRange = 256 ** size;
+  const range = max - min;
 
   // Validate parameters
   if (size <= 0 || size > 6) throw new RangeError('Size must be non-negative and less than or equal to 6.');
@@ -54,11 +54,11 @@ export function randomInt(
   const buf = createHmac(hmacAlgorithm, secretSeed).update(publicSeed).digest();
 
   // Try generating a random number in the uniform distribution range
-  const threshold = maxRange - (maxRange % range);
-  const r = randomUIntParser(buf, threshold, size);
+  const limit = maxRange - (maxRange % range);
+  const randomValue = hmacBufferUIntParser(buf, limit, size);
 
-  // Offset generated/fallback number by the given minimum and then fit it into the given range
-  return min + (Number.isNaN(r) ? fallbackProvider(range) : r % range);
+  // Offset generated/fallback number by the given minimum and then fit it inside the given range
+  return min + (Number.isNaN(randomValue) ? fallbackProvider(range) : randomValue % range);
 }
 
 export const randomInt8 = randomInt.bind(null, 1);

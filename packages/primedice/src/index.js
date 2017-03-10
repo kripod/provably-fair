@@ -16,26 +16,26 @@ export function generateServerSeed(size = 16) {
  * @param {number} max Maximum value of output (excluded).
  * @param {number} size Size of parsable chunks in bytes. Must be less than or equal to 6.
  * @param {number} [startOffset=0] Where to start reading the buffer.
- * @returns {number} An integer number parsed from the given buffer. If no appropriate number can be
- * parsed, `NaN` is returned.
+ * @returns {number} An unsigned integer parsed from the given buffer. If no appropriate number can
+ * be parsed, `NaN` is returned.
  */
-export function parseRandomUInt(buf, max, size, startOffset = 0) {
+export function parseUIntFromBuffer(buf, max, size, startOffset = 0) {
   // No appropriate number can be parsed
   if (startOffset > buf.length - size) return NaN;
 
   // Parse next number of the buffer and check whether it fits the given range
-  let r = buf.readUIntBE(startOffset, size, true);
+  let randomValue = buf.readUIntBE(startOffset, size, true);
 
   const isStartOffsetMultipleOf5 = startOffset % 5 === 0;
   if (isStartOffsetMultipleOf5) {
-    r = Math.floor(r / 0x10);
+    randomValue = Math.floor(randomValue / 0x10);
   } else {
-    r %= 0x100000;
+    randomValue %= 0x100000;
   }
 
-  return r * 0x10 < max ?
-    r :
-    parseRandomUInt(buf, max, size, startOffset + (isStartOffsetMultipleOf5 ? 2 : 3));
+  return randomValue * 0x10 < max ?
+    randomValue :
+    parseUIntFromBuffer(buf, max, size, startOffset + (isStartOffsetMultipleOf5 ? 2 : 3));
 }
 
 /**
@@ -47,17 +47,17 @@ export function parseRandomUInt(buf, max, size, startOffset = 0) {
  * @returns {number} A number within the range [0.00, 99.99].
  */
 export function roll(serverSeed, clientSeed, nonce) {
-  const r = randomInt(
+  const randomValue = randomInt(
     3,
     'sha512',
     serverSeed,
     `${clientSeed}-${nonce}`,
     0,
     10 ** 6,
-    parseRandomUInt,
+    parseUIntFromBuffer,
     () => (10 ** 6) - 1,
   );
 
   // Return only the last 4 decimal digits scaled from 0.00 to 99.99
-  return (r % (10 ** 4)) / (10 ** 2);
+  return (randomValue % (10 ** 4)) / (10 ** 2);
 }
