@@ -24,18 +24,15 @@ export function parseUIntFromBuffer(buf, max, size, startOffset = 0) {
   if (startOffset > buf.length - size) return NaN;
 
   // Parse next number of the buffer and check whether it fits the given range
-  let randomValue = buf.readUIntBE(startOffset, size, true);
+  const randomValue = Math.floor(
+    buf.readUIntBE(
+      Math.floor(startOffset),
+      Math.ceil(size),
+      true,
+    ) / (256 ** ((startOffset + size) % 1)),
+  ) % (256 ** size);
 
-  const isStartOffsetMultipleOf5 = startOffset % 5 === 0;
-  if (isStartOffsetMultipleOf5) {
-    randomValue = Math.floor(randomValue / 0x10);
-  } else {
-    randomValue %= 0x100000;
-  }
-
-  return randomValue * 0x10 < max ?
-    randomValue :
-    parseUIntFromBuffer(buf, max, size, startOffset + (isStartOffsetMultipleOf5 ? 2 : 3));
+  return randomValue < max ? randomValue : parseUIntFromBuffer(buf, max, size, startOffset + size);
 }
 
 /**
@@ -48,7 +45,7 @@ export function parseUIntFromBuffer(buf, max, size, startOffset = 0) {
  */
 export function roll(serverSeed, clientSeed, nonce) {
   const randomValue = randomInt(
-    3,
+    2.5,
     'sha512',
     serverSeed,
     `${clientSeed}-${nonce}`,

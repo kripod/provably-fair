@@ -18,4 +18,7 @@ test('roll output values', (t) => {
   t.is(roll(...DEFAULT_SEEDS, 2), 16.82);
   t.is(roll(...DEFAULT_SEEDS, 3), 33.44);
   t.is(roll(...DEFAULT_SEEDS, 4), 6.07);
+
+  // Special HMAC starting with 0xf526d (>= 10 ** 6)
+  t.is(roll(...DEFAULT_SEEDS, 11), 55);
 });
