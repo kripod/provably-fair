@@ -1,6 +1,6 @@
 {
   "name": "@provably-fair/shuffle",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Array shuffling functionality for provably fair games",
   "main": "dist/index.js",
   "repository": "https://github.com/kripod/provably-fair/tree/master/packages/shuffle",
@@ -19,7 +19,7 @@
     "doc": "documentation readme \"src/**\" --section=\"API Reference\""
   },
   "dependencies": {
-    "@provably-fair/core": "^0.1.0"
+    "@provably-fair/core": "^0.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
