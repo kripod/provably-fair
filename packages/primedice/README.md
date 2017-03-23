@@ -20,7 +20,7 @@ Generates a random server seed.
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A server seed of the given size.
 
-### parseRandomUInt
+### parseUIntFromBuffer
 
 Parses a buffer and tries returning the first unsigned integer which fits the given range.
 
@@ -31,8 +31,8 @@ Parses a buffer and tries returning the first unsigned integer which fits the gi
 -   `size` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Size of parsable chunks in bytes. Must be less than or equal to 6.
 -   `startOffset` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Where to start reading the buffer. (optional, default `0`)
 
-Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** An integer number parsed from the given buffer. If no appropriate number can be
-parsed, `NaN` is returned.
+Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** An unsigned integer parsed from the given buffer. If no appropriate number can
+be parsed, `NaN` is returned.
 
 ### roll
 

@@ -30,7 +30,8 @@ export function parseUIntFromBuffer(buf, max, size, startOffset = 0) {
  * @param {function} [hmacBufferUIntParser=parseUIntFromBuffer] Function to be used for parsing a
  * UInt from the generated HMAC buffer.
  * @param {function} [fallbackProvider=range => Math.floor(range / 2)] Function to provide a
- * fallback value in the given range whether no appropriate number can be parsed.
+ * fallback value in a given range whether no appropriate number can be parsed from the generated
+ * HMAC buffer.
  * @returns {number} An integer within the given range.
  */
 export function randomInt(
