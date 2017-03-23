@@ -1,0 +1,28 @@
+{
+  "name": "@provably-fair/shuffle",
+  "version": "0.0.0",
+  "description": "Array shuffling functionality for provably fair games",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kripod/provably-fair/tree/master/packages/shuffle",
+  "author": "Kristóf Poduszló <kripod@protonmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "dist",
+    "../LICENSE"
+  ],
+  "scripts": {
+    "build": "babel src -d dist -s",
+    "doc": "documentation readme \"src/**\" --section=\"API Reference\""
+  },
+  "dependencies": {
+    "@provably-fair/core": "^0.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "documentation": "^4.0.0-beta.18"
+  }
+}
